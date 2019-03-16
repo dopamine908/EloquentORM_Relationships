@@ -9,6 +9,7 @@ use App\Model\User;
 use App\Model\OneToOnePhone;
 use App\Model\OneToManyPost;
 use App\Model\OneToManyComment;
+use App\Model\HasManyThroughCountry;
 
 class RelationshipController extends Controller
 {
@@ -108,5 +109,13 @@ class RelationshipController extends Controller
         foreach ($user->ManyToManyRoleWherePivotIn as $role) {
             dump($role->Role);
         }
+    }
+
+    /**
+     * Eloquent 遠層一對多關聯用法
+     */
+    public function HasManyThrough() {
+        $country = HasManyThroughCountry::find(1);
+        dump($country->Posts);
     }
 }

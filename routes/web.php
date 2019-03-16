@@ -36,3 +36,10 @@ Route::get('一對多', 'RelationshipController@OneToMany');
 |--------------------------------------------------------------------------
 */
 Route::get('多對多', 'RelationshipController@ManyToMany');
+
+/*
+|--------------------------------------------------------------------------
+| Eloquent遠層一對多
+|--------------------------------------------------------------------------
+*/
+Route::get('遠層一對多', 'RelationshipController@HasManyThrough');
