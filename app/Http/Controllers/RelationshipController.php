@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\ManyToManyRole;
 use Illuminate\Http\Request;
 
 use App\Model\User;
@@ -56,5 +57,56 @@ class RelationshipController extends Controller
         $comment = OneToManyComment::find(1);
         $post = $comment->OneToManyPost;
         dump($comment, $post);
+    }
+
+    /**
+     * Eloquent 多對多關聯用法
+     */
+    public function ManyToMany() {
+        /**
+         * 屬於該使用者的身份。
+         */
+        $user = User::find(1);
+        dump($user->ManyToManyRole);
+        $user = User::find(2);
+        dump($user->ManyToManyRole);
+        $user = User::find(3);
+        dump($user->ManyToManyRole);
+
+        /**
+         * 屬於該身份的使用者們。
+         */
+        $role = ManyToManyRole::find(1);
+        dump($role->User);
+        $role = ManyToManyRole::find(2);
+        dump($role->User);
+        $role = ManyToManyRole::find(3);
+        dump($role->User);
+
+        /*
+         * 取得中介表欄位
+         */
+        foreach ($user->ManyToManyRole as $role) {
+            dump($role->pivot);
+            dump($role->pivot->ManyToManyRoleUserId);
+        }
+
+        /*
+         * 自訂 中介表 名稱
+         */
+        foreach ($user->ManyToManyRolePivotName as $role) {
+            dump($role->RoleUser);
+            dump($role->RoleUser->ManyToManyRoleUserId);
+        }
+
+        /*
+         * 透過中介表來篩選關聯
+         */
+        foreach ($user->ManyToManyRoleWherePivot as $role) {
+            dump($role->Role);
+        }
+        foreach ($user->ManyToManyRoleWherePivotIn as $role) {
+            dump($role->Role);
+        }
     }
 }
