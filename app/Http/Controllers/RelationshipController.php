@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\ManyToManyRole;
+use App\Model\PolymorphicRelationsComment;
 use Illuminate\Http\Request;
 
 use App\Model\User;
@@ -10,6 +11,8 @@ use App\Model\OneToOnePhone;
 use App\Model\OneToManyPost;
 use App\Model\OneToManyComment;
 use App\Model\HasManyThroughCountry;
+use App\Model\PolymorphicRelationPost;
+use App\Model\PolymorphicRelastionsVideo;
 
 class RelationshipController extends Controller
 {
@@ -117,5 +120,32 @@ class RelationshipController extends Controller
     public function HasManyThrough() {
         $country = HasManyThroughCountry::find(1);
         dump($country->Posts);
+    }
+
+    /**
+     * Eloquent 多型關聯用法
+     */
+    public function PolymorphicRelations() {
+        /**
+         * 取得CommenetType對應值所關聯的Model
+         */
+        $comment = PolymorphicRelationsComment::find(1);
+        dump($comment->CommentType123()); //可看MorphTo內容
+        $comment = PolymorphicRelationsComment::find(2);
+        dump($comment->CommentType123); //取得對應Model
+
+        /**
+         * 取得Post對應的Comment
+         */
+        $comment = PolymorphicRelationPost::find(1);
+        dump($comment->PolymorphicRelationsComment()); //可看MorphTo內容
+        dump($comment->PolymorphicRelationsComment); //取得對應Model
+
+        /**
+         * 取得Video對應的Comment
+         */
+        $comment = PolymorphicRelastionsVideo::find(1);
+        dump($comment->PolymorphicRelationsComment()); //可看MorphTo內容
+        dump($comment->PolymorphicRelationsComment); //取得對應Model
     }
 }
