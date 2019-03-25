@@ -17,9 +17,14 @@ class AppServiceProvider extends ServiceProvider
         /**
          * 可在這邊設定欄位值對應的Model
          */
+//        Relation::morphMap([
+//            'Post' => 'App\Model\PolymorphicRelationPost',
+//            'Video' => 'App\Model\PolymorphicRelastionsVideo',
+//        ]);
+
         Relation::morphMap([
-            'Post' => 'App\Model\PolymorphicRelationPost',
-            'Video' => 'App\Model\PolymorphicRelastionsVideo',
+            'Post' => \App\Model\ManyToManyPolyRelationPost::class,
+            'Video' => \App\Model\ManyToManyPolyRelationVideo::class,
         ]);
     }
 

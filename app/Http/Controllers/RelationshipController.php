@@ -13,6 +13,9 @@ use App\Model\OneToManyComment;
 use App\Model\HasManyThroughCountry;
 use App\Model\PolymorphicRelationPost;
 use App\Model\PolymorphicRelastionsVideo;
+use App\Model\ManyToManyPolyRelationPost;
+use App\Model\ManyToManyPolyRelationTag;
+use App\Model\ManyToManyPolyRelationVideo;
 
 class RelationshipController extends Controller
 {
@@ -147,5 +150,72 @@ class RelationshipController extends Controller
         $comment = PolymorphicRelastionsVideo::find(1);
         dump($comment->PolymorphicRelationsComment()); //可看MorphTo內容
         dump($comment->PolymorphicRelationsComment); //取得對應Model
+    }
+
+    /**
+     * Eloquent 多對多的多型關聯用法
+     */
+    public function ManyToManyPolymorphicRelations() {
+        /**
+         * Post所擁有的所有Tag
+         */
+        $post = ManyToManyPolyRelationPost::find(1);
+        /**
+         * 執行sql
+         *
+         * select `ManyToManyPolyRelationTag`.*,
+         * `ManyToManyPolyRelationTaggle`.`TargetId` as `pivot_TargetId`,
+         * `ManyToManyPolyRelationTaggle`.`TagId` as `pivot_TagId`
+         * from `ManyToManyPolyRelationTag`
+         * inner join `ManyToManyPolyRelationTaggle`
+         * on `ManyToManyPolyRelationTag`.`ManyToManyPolyRelationTagId` = `ManyToManyPolyRelationTaggle`.`TagId`
+         * where
+         * `ManyToManyPolyRelationTaggle`.`TargetId` = 1 and
+         * `ManyToManyPolyRelationTaggle`.`TagType_type` = 'Post'
+         *
+         */
+        dump($post->PostAllTags()->toSql());
+        dump($post->PostAllTags());
+        dump($post->PostAllTags);
+
+        /**
+         * Video所擁有的所有Tag
+         */
+        $video = ManyToManyPolyRelationVideo::find(3);
+        /**
+         * 執行sql
+         *
+         * select `ManyToManyPolyRelationTag`.*,
+         * `ManyToManyPolyRelationTaggle`.`TargetId` as `pivot_TargetId`,
+         * `ManyToManyPolyRelationTaggle`.`TagId` as `pivot_TagId`
+         * from `ManyToManyPolyRelationTag`
+         * inner join `ManyToManyPolyRelationTaggle`
+         * on `ManyToManyPolyRelationTag`.`ManyToManyPolyRelationTagId` = `ManyToManyPolyRelationTaggle`.`TagId`
+         * where
+         * `ManyToManyPolyRelationTaggle`.`TargetId` = 3 and
+         * `ManyToManyPolyRelationTaggle`.`TagType_type` = 'Video'
+         */
+        dump($video->VideoAllTags()->toSql());
+        dump($video->VideoAllTags());
+        dump($video->VideoAllTags);
+
+        /**
+         * 執行sql
+         *
+         * select `ManyToManyPolyRelationPost`.*,
+         * `ManyToManyPolyRelationTaggle`.`TagId` as `pivot_TagId`,
+         * `ManyToManyPolyRelationTaggle`.`TargetId` as `pivot_TargetId`
+         * from `ManyToManyPolyRelationPost`
+         * inner join `ManyToManyPolyRelationTaggle`
+         * on `ManyToManyPolyRelationPost`.`ManyToManyPolyRelationPostId` = `ManyToManyPolyRelationTaggle`.`TargetId`
+         * where
+         * `ManyToManyPolyRelationTaggle`.`TagId` = 2 and
+         * `ManyToManyPolyRelationTaggle`.`TagType_type` = 'Post'
+         */
+        $tag = ManyToManyPolyRelationTag::find(2);
+        dump($tag->Posts()->toSql());
+        dump($tag->Posts());
+        dump($tag->Posts);
+        dump($tag->Videos);
     }
 }

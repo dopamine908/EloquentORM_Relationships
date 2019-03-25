@@ -51,3 +51,10 @@ Route::get('遠層一對多', 'RelationshipController@HasManyThrough');
 */
 Route::get('多行關聯', 'RelationshipController@PolymorphicRelations');
 
+/*
+|--------------------------------------------------------------------------
+| Eloquent多對多的多型關聯
+|--------------------------------------------------------------------------
+*/
+Route::get('多對多的多型關聯', 'RelationshipController@ManyToManyPolymorphicRelations');
+
