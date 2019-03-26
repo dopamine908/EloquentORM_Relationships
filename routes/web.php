@@ -85,3 +85,10 @@ Route::get('計算關聯', 'RelationshipController@countRelation');
 |--------------------------------------------------------------------------
 */
 Route::get('預載入', 'RelationshipController@eagerLoadRelation');
+
+/*
+|--------------------------------------------------------------------------
+| 延遲預載入
+|--------------------------------------------------------------------------
+*/
+Route::get('延遲預載入', 'RelationshipController@loadRelation');

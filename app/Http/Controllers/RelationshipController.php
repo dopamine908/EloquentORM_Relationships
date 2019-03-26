@@ -343,4 +343,37 @@ class RelationshipController extends Controller
         ])->get();
         dump($post);
     }
+
+    /**
+     * 延遲預載入
+     */
+    public function loadRelation() {
+        /**
+         * 手動載入關聯模型
+         */
+        $post = OneToManyPost::all();
+        dump($post);
+        $post->load('OneToManyComment');
+        dump($post);
+
+        /**
+         * 手動載入關聯模型（加條件）
+         */
+        $post = OneToManyPost::all();
+        dump($post);
+        $post->load([
+            'OneToManyComment' => function ($query) {
+                $query->where('Comment', 'like', '%Prof%');
+            }
+        ]);
+        dump($post);
+
+        /**
+         * 如果有載入過的模型則不會在載入一次
+         */
+        $post = OneToManyPost::first();
+        dump($post);
+        $post->loadMissing('OneToManyComment');
+        dump($post);
+    }
 }
