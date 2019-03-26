@@ -227,4 +227,37 @@ class RelationshipController extends Controller
         $comment = $post->OneToManyComment()->where('Comment', 'like', '%ro%')->get();
         dump($comment);
     }
+
+    /**
+     * 查詢存在or未存在的關聯
+     */
+    public function whereHasRelation() {
+        /**
+         * 取得Comment超過4個的Post
+         */
+        $post = OneToManyPost::has('OneToManyComment', '>', 4)->get();
+        dump($post);
+
+        /**
+         * 取得Comment內容含有Prof的Post
+         */
+        $post = OneToManyPost::whereHas('OneToManyComment', function ($query){
+            $query->where('Comment', 'like', '%Prof%');
+        })->get();
+        dump($post);
+
+        /**
+         * 取得不含Comment的Post
+         */
+        $post = OneToManyPost::doesntHave('OneToManyComment')->get();
+        dump($post);
+
+        /**
+         * 取得Comment內容不含Prof的Post
+         */
+        $post = OneToManyPost::whereDoesntHave('OneToManyComment', function($query) {
+            $query->where('Comment', 'like', '%Prof%');
+        })->get();
+        dump($post);
+    }
 }

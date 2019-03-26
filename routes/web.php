@@ -65,3 +65,10 @@ Route::get('多對多的多型關聯', 'RelationshipController@ManyToManyPolymor
 */
 Route::get('查詢關聯', 'RelationshipController@whereRelation');
 
+/*
+|--------------------------------------------------------------------------
+| 查詢存在or未存在的關聯
+|--------------------------------------------------------------------------
+*/
+Route::get('查詢存在or未存在的關聯', 'RelationshipController@whereHasRelation');
+
