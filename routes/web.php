@@ -72,3 +72,9 @@ Route::get('查詢關聯', 'RelationshipController@whereRelation');
 */
 Route::get('查詢存在or未存在的關聯', 'RelationshipController@whereHasRelation');
 
+/*
+|--------------------------------------------------------------------------
+| 計算關聯
+|--------------------------------------------------------------------------
+*/
+Route::get('計算關聯', 'RelationshipController@countRelation');

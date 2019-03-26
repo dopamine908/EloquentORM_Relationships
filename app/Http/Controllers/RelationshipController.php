@@ -260,4 +260,45 @@ class RelationshipController extends Controller
         })->get();
         dump($post);
     }
+
+    /**
+     * 計算關聯
+     */
+    public function countRelation() {
+        /**
+         * 如果你想要從關聯中計算結果的數字，
+         * 而不載入它們。
+         * 可以使用 withCount 方法
+         * 該方法會在你的結果模型上放置  {relation}_count 欄位
+         * 其中{relation} 會轉換為小寫蛇行
+         */
+        $post = OneToManyPost::withCount('OneToManyComment')->get();
+        dump($post);
+        dump($post->pluck('one_to_many_comment_count'));
+
+        /**
+         * 可以對要count的欄位下條件
+         */
+        $post = OneToManyPost::withCount(['OneToManyComment' => function ($query) {
+            $query->where('Comment', 'like', '%Prof%');
+        }])->get();
+        dump($post);
+        dump($post->pluck('one_to_many_comment_count'));
+
+        /**
+         * 同一個欄位可以count多次
+         * 如有用as 則會把結果模型放置的欄位名稱改為as 的值
+         */
+        $post = OneToManyPost::withCount([
+            'OneToManyComment' => function ($query) {
+                $query->where('Comment', 'like', '%Prof%');
+            },
+            'OneToManyComment as ContainC' => function ($query) {
+                $query->where('Comment', 'like', '%C%');
+            }
+        ])->get();
+        dump($post);
+        dump($post->pluck('one_to_many_comment_count'));
+        dump($post->pluck('ContainC'));
+    }
 }
