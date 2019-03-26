@@ -301,4 +301,46 @@ class RelationshipController extends Controller
         dump($post->pluck('one_to_many_comment_count'));
         dump($post->pluck('ContainC'));
     }
+
+    /**
+     * 預載入
+     */
+    public function eagerLoadRelation() {
+        /**
+         * 預載入OneToManyComment資料
+         * 執行了
+         * select * from `OneToManyComment`
+         * where
+         * `OneToManyComment`.`OneToManyPostId`
+         * in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+         *
+         * 想預載入多個relation可以這樣寫
+         * OneToManyPost::with(['Relation1', 'Relation2'])->get();
+         */
+        $post = OneToManyPost::with('OneToManyComment')->get();
+        dump($post);
+
+        /**
+         * 只想載入relation的某些欄位的時候
+         */
+        $post = OneToManyPost::with('OneToManyComment:OneToManyPostId,Comment')->get();
+        dump($post);
+
+        /**
+         * 可以對想要預載入的relation下條件
+         */
+        $post = OneToManyPost::with([
+            'OneToManyComment' => function ($query) {
+                $query->where('Comment', 'like', '%Prof%');
+            }
+        ])->get();
+        dump($post);
+
+        $post = OneToManyPost::with([
+            'OneToManyComment' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }
+        ])->get();
+        dump($post);
+    }
 }

@@ -78,3 +78,10 @@ Route::get('查詢存在or未存在的關聯', 'RelationshipController@whereHasR
 |--------------------------------------------------------------------------
 */
 Route::get('計算關聯', 'RelationshipController@countRelation');
+
+/*
+|--------------------------------------------------------------------------
+| 預載入
+|--------------------------------------------------------------------------
+*/
+Route::get('預載入', 'RelationshipController@eagerLoadRelation');
