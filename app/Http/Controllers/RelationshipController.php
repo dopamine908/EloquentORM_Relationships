@@ -218,4 +218,13 @@ class RelationshipController extends Controller
         dump($tag->Posts);
         dump($tag->Videos);
     }
+
+    /**
+     * 將查詢條件鏈結到關聯查詢上
+     */
+    public function whereRelation() {
+        $post = OneToManyPost::find(1);
+        $comment = $post->OneToManyComment()->where('Comment', 'like', '%ro%')->get();
+        dump($comment);
+    }
 }

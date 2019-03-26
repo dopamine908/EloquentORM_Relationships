@@ -58,3 +58,10 @@ Route::get('多行關聯', 'RelationshipController@PolymorphicRelations');
 */
 Route::get('多對多的多型關聯', 'RelationshipController@ManyToManyPolymorphicRelations');
 
+/*
+|--------------------------------------------------------------------------
+| 將查詢條件鏈結到關聯查詢上
+|--------------------------------------------------------------------------
+*/
+Route::get('查詢關聯', 'RelationshipController@whereRelation');
+
