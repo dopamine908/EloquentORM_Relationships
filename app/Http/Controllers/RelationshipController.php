@@ -432,4 +432,32 @@ class RelationshipController extends Controller
             ]
         ]));
     }
+
+    /**
+     * 更新belongsTo關聯
+     */
+    public function associate() {
+        $comment = OneToManyComment::find(41);
+        $post = OneToManyPost::find(2);
+
+        /**
+         * 當更新一筆 belongsTo 關聯時
+         * 你可以使用 associate 方法
+         * 此方法會設定外鍵至下層模型
+         * 等價於 $post->OneToManyComment()->save($comment)
+         * 都是更新OneToManyComment列表中的OneToManyPostId
+         * 這樣一來，我们就無須使用以下這樣的更新方式。
+         * OneToManyComment::where('OneToManyPostId','=' , $comment->OneToManyPostId)
+         * ->update(['OneToManyPostId' => $post->OneToManyPostId]);
+         */
+        dump($comment->OneToManyPost()->associate($post));
+        dump($comment->save());
+
+        /**
+         * 要移除 belongsTo 關聯時
+         * 你可以使用 dissociate 方法
+         * 這個方法會設定關聯的外鍵為 null
+         */
+        dump($comment->OneToManyPost()->dissociate()->save());
+    }
 }

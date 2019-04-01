@@ -106,3 +106,10 @@ Route::get('save方法', 'RelationshipController@save');
 |--------------------------------------------------------------------------
 */
 Route::get('create方法', 'RelationshipController@create');
+
+/*
+|--------------------------------------------------------------------------
+| 更新belongsTo關聯
+|--------------------------------------------------------------------------
+*/
+Route::get('更新belongsTo關聯', 'RelationshipController@associate');
