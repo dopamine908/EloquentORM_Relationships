@@ -92,3 +92,10 @@ Route::get('預載入', 'RelationshipController@eagerLoadRelation');
 |--------------------------------------------------------------------------
 */
 Route::get('延遲預載入', 'RelationshipController@loadRelation');
+
+/*
+|--------------------------------------------------------------------------
+| save方法
+|--------------------------------------------------------------------------
+*/
+Route::get('save方法', 'RelationshipController@save');

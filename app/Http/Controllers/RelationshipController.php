@@ -376,4 +376,31 @@ class RelationshipController extends Controller
         $post->loadMissing('OneToManyComment');
         dump($post);
     }
+
+    /**
+     * save() 方法
+     */
+    public function save() {
+        $post = OneToManyPost::find(1);
+        $add_comment = new OneToManyComment();
+        $add_comment->Comment = 'test_comment';
+        /**
+         * 呼叫 OneToManyComment 方法來取得關聯的實例
+         * save 方法會自動在新的 OneToManyComment Model 中
+         * 確實的新增 OneToManyPostId 值。
+         */
+        dump($post->OneToManyComment()->save($add_comment));
+
+        $add_comment1 = new OneToManyComment();
+        $add_comment1->Comment = 'test_comment_1';
+        $add_comment2 = new OneToManyComment();
+        $add_comment2->Comment = 'test_comment_2';
+        /**
+         * 儲存多筆關聯 Model
+         */
+        dump($post->OneToManyComment()->saveMany([
+            $add_comment1,
+            $add_comment2
+        ]));
+    }
 }
