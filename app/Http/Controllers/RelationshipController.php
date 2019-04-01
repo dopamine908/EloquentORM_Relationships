@@ -403,4 +403,33 @@ class RelationshipController extends Controller
             $add_comment2
         ]));
     }
+
+    /**
+     * create() 方法
+     */
+    public function create() {
+        $post = OneToManyPost::find(1);
+        /**
+         * save 與 create 不同的地方在於
+         * save 可以傳入一個完整的 Eloquent 模型實例
+         * 但 create 只能傳入原生的 PHP 陣列
+         *
+         * 在使用 create 方法之前，請確定設定了批量賦值
+         */
+        dump($post->OneToManyComment()->create([
+            'Comment' => 'test_comment_123'
+        ]));
+
+        /**
+         * createMany 方法來建立多筆關聯模型
+         */
+        dump($post->OneToManyComment()->createMany([
+            [
+                'Comment' => 'test_comment_456'
+            ],
+            [
+                'Comment' => 'test_comment_789'
+            ]
+        ]));
+    }
 }

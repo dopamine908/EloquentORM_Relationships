@@ -21,6 +21,11 @@ class OneToManyComment extends Model
     protected $primaryKey = 'OneToManyCommentId';
 
     /**
+     * 使用 create 需設定批量賦值
+     */
+    protected $fillable = ['Comment'];
+
+    /**
      * 取得擁有該評論的文章。
      */
     public function OneToManyPost() {
