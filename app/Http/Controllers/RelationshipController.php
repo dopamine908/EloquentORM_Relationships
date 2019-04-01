@@ -460,4 +460,47 @@ class RelationshipController extends Controller
          */
         dump($comment->OneToManyPost()->dissociate()->save());
     }
+
+    /**
+     * 更新多對多關聯
+     */
+    public function attach() {
+        $user = User::find(3);
+
+        /**
+         * 附加
+         * 在中間表新增一筆資料
+         * Sql如下
+         * insert into `ManyToManyRoleUser`
+         * (`ManyToManyRoleId`, `UserId`, `created_at`, `updated_at`)
+         * values
+         * (1, 3, '2019-04-01 14:28:29', '2019-04-01 14:28:29')
+         *
+         * ->attach(1, ['value' => 1123]) 可新增中間表其他欄位的值
+         * ->attach([
+                    1 => ['value' => 123],
+                    2 => ['value' => 456]
+                ])  可一次新增多筆
+         */
+        dump($user->ManyToManyRole()->attach(1));
+//        $user->ManyToManyRole()->attach(1, ['value' => 1123]);
+//        $user->ManyToManyRole()->attach([
+//            1 => ['value' => 123],
+//            2 => ['value' => 456]
+//        ]);
+
+        /**
+         * 卸除
+         * 在中間表刪除一筆資料
+         * Sql如下
+         * delete from `ManyToManyRoleUser`
+         * where `UserId` = 3 and `ManyToManyRoleId` in (1)
+         *
+         * ->detach([1,2,3]) 可一次刪除多筆
+         * ->detach() 可一次刪除全部
+         */
+        dump($user->ManyToManyRole()->detach(1));
+//        dump($user->ManyToManyRole()->detach([1,2,3]));
+//        dump($user->ManyToManyRole()->detach());
+    }
 }
