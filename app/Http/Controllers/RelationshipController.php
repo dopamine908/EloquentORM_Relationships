@@ -528,4 +528,25 @@ class RelationshipController extends Controller
          */
         dump($user->ManyToManyRole()->syncWithoutDetaching([1,2]));
     }
+
+    /**
+     * 切換關聯
+     */
+    public function toggle() {
+        $user = User::find(2);
+        /**
+         * 多對多關聯也提供 toggle 方法來「切換」給定 ID 的附加狀態
+         * 如果給定 ID 目前已被附加，它將會被卸除
+         * 如果給定 ID 目前被卸除，那麼它將會被附加
+         *
+         * 如如果原本pivot只有1,2
+         * 執行一次toggle([1,2,3])) => 則1,2被取消,3被新增
+         * 再執行一次toggle([1,2,3])) => 則3被取消,1,2被新增
+         *
+         * sync則是以輸入的直為主
+         * sync([1,2]) 就是把pivot更新為只有1,2的狀態
+         * 少的新增,多得刪除
+         */
+        dump($user->ManyToManyRole()->toggle([1,2,3]));
+    }
 }
