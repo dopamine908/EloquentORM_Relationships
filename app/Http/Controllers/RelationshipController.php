@@ -503,4 +503,29 @@ class RelationshipController extends Controller
 //        dump($user->ManyToManyRole()->detach([1,2,3]));
 //        dump($user->ManyToManyRole()->detach());
     }
+
+    /**
+     * 同步多對多關聯
+     */
+    public function sync() {
+        $user = User::find(2);
+
+        /**
+         * sync 允許傳入放置於中介表的 ID 陣列
+         * 任何不在給定陣列中的 ID 將會從中介表中被刪除
+         */
+        dump($user->ManyToManyRole()->sync([1,2]));
+
+        //同步的時候要給定額外的值
+        dump($user->ManyToManyRole()->sync([
+            1 => ['value' => 123],
+            2 => ['value' => 456]
+        ]));
+
+        /**
+         * 如果你不想移除已存在的 ID
+         * 你可以使用 syncWithoutDetaching
+         */
+        dump($user->ManyToManyRole()->syncWithoutDetaching([1,2]));
+    }
 }

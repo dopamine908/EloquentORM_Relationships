@@ -121,3 +121,9 @@ Route::get('更新belongsTo關聯', 'RelationshipController@associate');
 */
 Route::get('更新多對多關聯', 'RelationshipController@attach');
 
+/*
+|--------------------------------------------------------------------------
+| 同步多對多關聯
+|--------------------------------------------------------------------------
+*/
+Route::get('同步多對多關聯', 'RelationshipController@sync');
