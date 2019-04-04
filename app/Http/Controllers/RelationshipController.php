@@ -549,4 +549,25 @@ class RelationshipController extends Controller
          */
         dump($user->ManyToManyRole()->toggle([1,2,3]));
     }
+
+    /**
+     * 在中介表上儲存額外的資料
+     */
+    public function save_with_pivot_table() {
+        $user = User::find(1);
+        $role_user = User::find(1)->ManyToManyRole->first();
+        /**
+         * save() 輸入第二個參數
+         * 可以在中介表中新增額外一筆資料
+         */
+        dump(
+            $user->ManyToManyRole()->save(
+                $role_user,
+                [
+                    'ManyToManyRoleId' => 2,
+                    'updated_at' => '2019-11-11 11:11:11'
+                ]
+            )
+        );
+    }
 }
