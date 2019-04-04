@@ -588,4 +588,16 @@ class RelationshipController extends Controller
             ]
         ));
     }
+
+    /**
+     * 連動上層時間戳記
+     */
+    public function touches() {
+        $comment = OneToManyComment::find(3);
+        $comment->Comment = 'new123';
+        /**
+         * 它所屬的 OneToManyPost 擁有的 updated_at 欄位也會同時更新
+         */
+        dump($comment->save());
+    }
 }
