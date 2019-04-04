@@ -570,4 +570,22 @@ class RelationshipController extends Controller
             )
         );
     }
+
+    /**
+     * 修改中介表中的特定記錄
+     */
+    public function updateExistingPivot() {
+        $user = User::find(1);
+        /**
+         * 修改已存在中介表中的記錄
+         *
+         * 將中介表中ManyToManyRoleId＝1的都更新成ManyToManyRoleId=3
+         */
+        dump($user->ManyToManyRole()->updateExistingPivot(
+            1, //ManyToManyRoleUser.ManyToManyRoleId
+            [
+                'ManyToManyRoleId' => 3,
+            ]
+        ));
+    }
 }
